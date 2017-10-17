@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    {% load chartit %}
+    <div id="chart" class="col"></div>
+    {{ proportions|load_charts:"chart" }}
+{% endblock %}

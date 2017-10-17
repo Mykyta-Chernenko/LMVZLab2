@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+    <script src="http://code.jquery.com/jquery-latest.js"></script><!--Подключаем библиотеку Jquery-->
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet"
+          type="text/css"/><!--Подключаем стили CSS для библиотеки Jquery UI-->
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script><!--Подключаем библиотеку Jquery UI-->
+
+    <script type="text/javascript">
+        man = {{men_proportions}};
+        woman = {{women_proportions}};
+        min = 140
+        $(document).ready(function () {
+            $("#man_slider").slider({
+                value: 140,//Значение, которое будет выставлено слайдеру при загрузке
+                min: 140,//Минимально возможное значение на ползунке
+                max: 200,//Максимально возможное значение на ползунке
+                step: 1,//Шаг, с которым будет двигаться ползунок
+                create: function (event, ui) {
+                    val = $("#slider").slider("value");//При создании слайдера, получаем его значение в перемен. val
+                    $("#man_weight").html('<h1>Мужской рост:' + 140 + '</h1>');//При изменении значения ползунка заполняем элемент с id contentSlider
+                    $("#man_height").html('<h1>Соответствующий мужской вес:' + 55 + '</h1>');//Заполняем этим значением элемент с id contentSlider
+                },
+                slide: function (event, ui) {
+                    $("#man_weight").html('<h1>Мужской рост:' + ui.value    + '</h1>');//При изменении значения ползунка заполняем элемент с id contentSlider
+                    $("#man_height").html('<h1>Соответствующий мужской вес:' + man[ui.value-min] + '</h1>');//Заполняем этим значением элемент с id contentSlider
+                }
+            });
+            $("#woman_slider").slider({
+                value: 140,//Значение, которое будет выставлено слайдеру при загрузке
+                min: 140,//Минимально возможное значение на ползунке
+                max: 200,//Максимально возможное значение на ползунке
+                step: 1,//Шаг, с которым будет двигаться ползунок
+                create: function (event, ui) {
+                    val = $("#slider").slider("value");//При создании слайдера, получаем его значение в перемен. val
+                    $("#woman_weight").html('<h1>Женский рост:' + 140+ '</h1>');//При изменении значения ползунка заполняем элемент с id contentSlider
+                    $("#woman_height").html('<h1>Соответствующий женский вес:' + 45 + '</h1>');//При изменении значения ползунка заполняем элемент с id contentSlider
+                },
+                slide: function (event, ui) {
+                    $("#woman_weight").html('<h1>Женский рост:' + ui.value + '</h1>');//При изменении значения ползунка заполняем элемент с id contentSlider
+                    $("#woman_height").html('<h1>Соответствующий женский вес:' +  man[ui.value-min] + '</h1>');//При изменении значения ползунка заполняем элемент с id contentSlider
+                }
+            });
+        });
+    </script>
+
+    <div class="align-item-center justify-content-center col" style="margin-top: 20px">
+
+        <div id="man_weight" class="alert-info"
+             style="padding-top: 10px; margin-left: 30%; margin-right: 30%; text-align: center"></div>
+        <div id="man_slider"></div>
+        <div id="man_height" class="alert-info"
+             style="padding-top: 10px; margin-left: 30%; margin-right: 30%; text-align: center"></div>
+
+        <div id="woman_weight" class="alert-info"
+             style="padding-top: 10px; margin-left: 30%; margin-right: 30%; text-align: center"></div>
+        <div id="woman_slider"></div>
+        <div id="woman_height" class="alert-info"
+             style="padding-top: 10px; margin-left: 30%; margin-right: 30%; text-align: center"></div>
+
+    </div>
+
+
+{% endblock %}
