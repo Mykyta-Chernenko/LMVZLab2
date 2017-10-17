@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row align-items-end">
+        <div class="form-group search_block col-xs-12 col-md-4">
+            <label for="height_picker">Рост в см</label>
+            <select name="height" id="height_picker" class="form-control">
+                {% for  height in heights %}
+                    <option value="{{ height }}">{{ height }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group  col-xs-12 col-md-4">
+            <label for="sex_picker">Пол</label>
+            <select name="sexes" id="sex_picker" class="form-control">
+                {% for sex in sexes %}
+                    <option value="{{ sex }}">{{ sex }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4 form-group">
+            <button class="btn btn-success btn-block" id="btn-weight"
+                    onclick="get_weight()">
+                Оптимальный вес
+            </button>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-4" id="weight">
+            <p class="btn alert-info btn-block">
+                Оптимальный вес: 80
+            </p>
+        </div>
+    </div>
+    <script>
+        $('#height_picker').change(function (e) {
+            if ($('#height_picker option:selected').length !== 0 && $('#sex_picker option:selected').length !== 0) {
+                $('#btn-weight').removeClass('disabled');
+            }
+        });
+        $('#sex_picker').change(function (e) {
+            if ($('#height_picker option:selected').length !== 0 && $('#sex_picker option:selected').length !== 0) {
+                $('#btn-weight').removeClass('disabled');
+            }
+        })
 
-</body>
-</html>
+        function get_weight() {
+            height = $('#height_picker').val();
+            sex = $('#sex_picker').val();
+            $.ajax({
+                url: "{% url 'get-weight' %}",
+                data: {'sex': sex, 'height': height},
+                method: 'GET',
+                success: function (data) {
+                    $('#weight').html(data)
+                },
+                error: function (data) {
+                    alert(data);
+                }
+
+            })
+        }
+    </script>
+{% endblock %}

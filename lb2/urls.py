@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from lb2 import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^page1',views.page1),
+    url(r'^get-weight',views.get_weight,name='get-weight'),
     url(r'^page2',views.page2),
     url(r'^page3',views.page3),
     url(r'^page4',views.page4),
